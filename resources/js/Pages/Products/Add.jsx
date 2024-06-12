@@ -1,6 +1,6 @@
-import React from 'react'
-import { Head, useForm } from '@inertiajs/react'
 import Authenticated from '@/Layouts/AuthenticatedLayout'
+import { Head, useForm } from '@inertiajs/react'
+import React from 'react'
 
 export default function Add({ auth }) {
     const { data, setData, post } = useForm({
@@ -13,7 +13,6 @@ export default function Add({ auth }) {
         e.preventDefault()
         post(route('products.create'))
     }
-
     return (
         <Authenticated user={auth.user} header={<h2>Add New Product</h2>}>
             <Head title='Add Products' />
@@ -39,11 +38,7 @@ export default function Add({ auth }) {
                     value={data.sellingPrice}
                     onChange={e => setData('sellingPrice', e.target.value)}
                 />
-                <button
-                    className='btn btn-success'
-                    type="submit">
-                    Save
-                </button>
+                <button className='btn btn-success' type="submit">Save</button>
             </form>
         </Authenticated>
     )
