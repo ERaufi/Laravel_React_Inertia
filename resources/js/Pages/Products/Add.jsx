@@ -7,6 +7,7 @@ export default function Add({ auth }) {
         name: '',
         buyingPrice: '',
         sellingPrice: '',
+        image: null,
     })
 
     function submit(e) {
@@ -38,6 +39,7 @@ export default function Add({ auth }) {
                     value={data.sellingPrice}
                     onChange={e => setData('sellingPrice', e.target.value)}
                 />
+                <input type="file" onChange={e => setData('image', e.target.files[0])} />
                 <button className='btn btn-success' type="submit">Save</button>
             </form>
         </Authenticated>
