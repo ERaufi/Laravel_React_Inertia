@@ -10,12 +10,10 @@ class ProductsController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Products::query();
-        $products = $query->select('id', 'name', 'image', 'buyingPrice', 'sellingPrice')->get();
+        $products = Products::select('id', 'name', 'image', 'buyingPrice', 'sellingPrice')->get();
 
         return inertia('Products/Index', [
             'products' => $products,
-            'storagePath' => asset('storage')
         ]);
     }
 

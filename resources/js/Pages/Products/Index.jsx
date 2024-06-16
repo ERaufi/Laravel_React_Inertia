@@ -1,8 +1,8 @@
-import Authenticated from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
-import React from 'react';
+import Authenticated from '@/Layouts/AuthenticatedLayout'
+import { Head, Link } from '@inertiajs/react'
+import React from 'react'
 
-export default function Index({ auth, products, storagePath }) {
+export default function Index({ auth, products }) {
     return (
         <Authenticated user={auth.user} header={<h2>Products</h2>}>
             <Head title="Products" />
@@ -19,7 +19,7 @@ export default function Index({ auth, products, storagePath }) {
                 <tbody>
                     {products.map((product) => (
                         <tr key={product.id}>
-                            <td><img src={'storage/' + product.image} style={{ width: '180px' }} title='hi'/></td>
+                            <td><img src={'storage/' + product.image} style={{ width: '180px' }} title='hi' /></td>
                             <td>{product.name}</td>
                             <td>{product.buyingPrice}</td>
                             <td>{product.sellingPrice}</td>
@@ -33,5 +33,5 @@ export default function Index({ auth, products, storagePath }) {
                 </tbody>
             </table>
         </Authenticated>
-    );
+    )
 }
