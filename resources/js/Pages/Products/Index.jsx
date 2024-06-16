@@ -1,8 +1,14 @@
+import Pagination from '@/Components/Pagination'
 import Authenticated from '@/Layouts/AuthenticatedLayout'
-import { Head, Link } from '@inertiajs/react'
+import { Head, Link, useForm } from '@inertiajs/react'
 import React from 'react'
 
 export default function Index({ auth, products }) {
+    const { data, setData } = useForm({
+        page: products.current_page
+    });
+
+
     return (
         <Authenticated user={auth.user} header={<h2>Products</h2>}>
             <Head title="Products" />
@@ -17,7 +23,7 @@ export default function Index({ auth, products }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {products.map((product) => (
+                    {products.data.map((product) => (
                         <tr key={product.id}>
                             <td><img src={'storage/' + product.image} style={{ width: '180px' }} title='hi' /></td>
                             <td>{product.name}</td>
@@ -32,6 +38,11 @@ export default function Index({ auth, products }) {
                     ))}
                 </tbody>
             </table>
+            <Pagination
+                links={products.links}
+                currentPage={products.currentPage}
+                setCurrentPage={(page) => setData('page', page)}
+            />
         </Authenticated>
     )
 }

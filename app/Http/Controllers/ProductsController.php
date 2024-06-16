@@ -10,7 +10,7 @@ class ProductsController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Products::select('id', 'name', 'image', 'buyingPrice', 'sellingPrice')->get();
+        $products = Products::select('id', 'name', 'image', 'buyingPrice', 'sellingPrice')->paginate(10);
 
         return inertia('Products/Index', [
             'products' => $products,
