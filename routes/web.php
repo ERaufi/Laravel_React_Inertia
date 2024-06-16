@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('products')->controller(ProductsController::class)->group(function () {
+        Route::get('/', 'index')->name('products');
         Route::inertia('add', 'Products/Add')->name('products.add');
         Route::post('create', 'create')->name('products.create');
     });

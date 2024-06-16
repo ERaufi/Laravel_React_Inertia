@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
+    public function index(Request $request)
+    {
+        $products = Products::select('id', 'name', 'image', 'buyingPrice', 'sellingPrice')->get();
+
+        return inertia('Products/Index', [
+            'products' => $products,
+        ]);
+    }
+
     public function create(ProductsRequest $request)
     {
         $product = new Products();
