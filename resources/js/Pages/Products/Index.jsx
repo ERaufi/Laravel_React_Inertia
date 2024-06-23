@@ -1,32 +1,22 @@
-import Pagination from '@/Components/Pagination'
+import Pagination from '@/Components/Pagination';
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Head, Link, useForm } from '@inertiajs/react'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 
-export default function Index({ auth, products, filters: initialFilters }) {
+export default function Index({ auth, products }) {
     const { data, setData, get } = useForm({
-        name: initialFilters.name || '',
-        buyingPrice: initialFilters.buyingPrice || '',
-        sellingPrice: initialFilters.sellingPrice || '',
-        page: products.current_page || 1
+        name: '',
+        buyingPrice: '',
+        sellingPrice: '',
+        page: products.current_page
     });
 
-    // Handle changes in filters
     const handleFilterChange = (e) => setData(e.target.name, e.target.value);
 
-    const isFirstRender = useRef(true);
-
-    // Fetch filtered data on filter or page change
     useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return;
-        }
-
         const timeoutId = setTimeout(() => {
             get('products', {
                 preserveState: true,
-                replace: true,
                 name: data.name,
                 buyingPrice: data.buyingPrice,
                 sellingPrice: data.sellingPrice,
@@ -36,7 +26,6 @@ export default function Index({ auth, products, filters: initialFilters }) {
 
         return () => clearTimeout(timeoutId);
     }, [data]);
-
 
     return (
         <Authenticated user={auth.user} header={<h2>Products</h2>}>

@@ -31,7 +31,6 @@ class ProductsController extends Controller
 
         return inertia('Products/Index', [
             'products' => $products,
-            'filters' => $request->all()
         ]);
     }
 
