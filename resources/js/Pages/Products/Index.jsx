@@ -1,12 +1,40 @@
 import Pagination from '@/Components/Pagination'
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Head, Link, useForm } from '@inertiajs/react'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
-export default function Index({ auth, products }) {
+export default function Index({ auth, products, filters: initialFilters }) {
     const { data, setData } = useForm({
-        page: products.current_page
+        name: initialFilters.name || '',
+        buyingPrice: initialFilters.buyingPrice || '',
+        sellingPrice: initialFilters.sellingPrice || '',
+        page: products.current_page || 1
     });
+
+    // Handle changes in filters
+    const handleFilterChange = (e) => setData(e.target.name, e.target.value);
+
+    const isFirstRender = useRef(true);
+
+    // Fetch filtered data on filter or page change
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
+        const timeoutId = setTimeout(() => {
+            get('products', {
+                preserveState: true, replace: true,
+                name: data.name,
+                buyingPrice: data.buyingPrice,
+                sellingPrice: data.sellingPrice,
+                page: data.page,
+            });
+        }, 300);
+
+        return () => clearTimeout(timeoutId);
+    }, [data]);
 
 
     return (
@@ -16,9 +44,39 @@ export default function Index({ auth, products }) {
                 <thead>
                     <tr>
                         <th>Image</th>
-                        <th>Name</th>
-                        <th>Buying Price</th>
-                        <th>Selling Price</th>
+                        <th>
+                            <label>Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={data.name}
+                                onChange={handleFilterChange}
+                                placeholder="Filter by Name"
+                                className="form-control"
+                            />
+                        </th>
+                        <th>
+                            <label>Buying Price</label>
+                            <input
+                                type="text"
+                                name="buyingPrice"
+                                value={data.buyingPrice}
+                                onChange={handleFilterChange}
+                                placeholder="Filter by Buying Price"
+                                className="form-control"
+                            />
+                        </th>
+                        <th>
+                            <label>Selling Price</label>
+                            <input
+                                type="text"
+                                name="sellingPrice"
+                                value={data.sellingPrice}
+                                onChange={handleFilterChange}
+                                placeholder="Filter by Selling Price"
+                                className="form-control"
+                            />
+                        </th>
                         <th>Action</th>
                     </tr>
                 </thead>
