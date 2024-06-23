@@ -4,7 +4,7 @@ import { Head, Link, useForm } from '@inertiajs/react'
 import React, { useEffect, useRef } from 'react'
 
 export default function Index({ auth, products, filters: initialFilters }) {
-    const { data, setData } = useForm({
+    const { data, setData, get } = useForm({
         name: initialFilters.name || '',
         buyingPrice: initialFilters.buyingPrice || '',
         sellingPrice: initialFilters.sellingPrice || '',
@@ -25,7 +25,8 @@ export default function Index({ auth, products, filters: initialFilters }) {
 
         const timeoutId = setTimeout(() => {
             get('products', {
-                preserveState: true, replace: true,
+                preserveState: true,
+                replace: true,
                 name: data.name,
                 buyingPrice: data.buyingPrice,
                 sellingPrice: data.sellingPrice,
