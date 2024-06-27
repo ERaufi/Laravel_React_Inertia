@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductsRequest;
+use App\Http\Requests\ProductsUpdateRequest;
 use App\Models\Products;
 use Illuminate\Http\Request;
 
@@ -45,5 +46,29 @@ class ProductsController extends Controller
         $product->save();
 
         return redirect('dashboard')->with('success', 'Product Added successfully.');
+    }
+
+    public function edit($id)
+    {
+        $product = Products::findOrFail($id);
+
+        return inertia('Products/Edit', compact('product'));
+    }
+
+    public function update(ProductsUpdateRequest $request)
+    {
+        $item = Products::where('id', $request->id)->first();
+        $item->name = $request->name;
+        $item->buyingPrice = $request->buyingPrice;
+        $item->sellingPrice = $request->sellingPrice;
+
+        if ($request->has('image') && $request->image != null) {
+            $imagePath = $request->file('image')->store('productsImages', 'public');
+            $item->image = $imagePath;
+        }
+
+        $item->update();
+
+        return redirect('products')->with('success', 'Product Added successfully.');
     }
 }

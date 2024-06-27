@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index')->name('products');
         Route::inertia('add', 'Products/Add')->name('products.add');
         Route::post('create', 'create')->name('products.create');
+        Route::get('edit/{id}', 'edit');
+        Route::post('update', 'update')->name('product.update');
     });
 });
 
