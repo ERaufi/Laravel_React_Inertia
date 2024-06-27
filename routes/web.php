@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
         Route::post('create', 'create')->name('products.create');
         Route::get('edit/{id}', 'edit');
         Route::post('update', 'update')->name('product.update');
+        Route::get('show/{id}', 'show');
     });
 });
 

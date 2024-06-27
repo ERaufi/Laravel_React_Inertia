@@ -71,4 +71,13 @@ class ProductsController extends Controller
 
         return redirect('products')->with('success', 'Product Added successfully.');
     }
+
+    public function show($id)
+    {
+        $product = Products::where('id', $id)->first();
+
+        return inertia('Products/Show', [
+            'product' => $product
+        ]);
+    }
 }
