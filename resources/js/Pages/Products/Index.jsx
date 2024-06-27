@@ -4,7 +4,7 @@ import { Head, Link, useForm } from '@inertiajs/react'
 import React, { useEffect } from 'react'
 
 export default function Index({ auth, products }) {
-    const { data, setData, get } = useForm({
+    const { data, setData, get, delete: destroy } = useForm({
         name: '',
         buyingPrice: '',
         sellingPrice: '',
@@ -26,6 +26,14 @@ export default function Index({ auth, products }) {
 
         return () => clearTimeout(timeoutId);
     }, [data]);
+
+
+    const handleDelete = (productId) => {
+        if (confirm('Are you sure you want to delete this product?')) {
+            destroy(`/products/delete/${productId}`);
+        }
+    };
+
 
     return (
         <Authenticated user={auth.user} header={<h2>Products</h2>}>

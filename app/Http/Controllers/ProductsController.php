@@ -80,4 +80,11 @@ class ProductsController extends Controller
             'product' => $product
         ]);
     }
+
+    public function delete($id)
+    {
+        Products::where('id', $id)->delete();
+
+        return redirect('products')->with('success', 'Product Deleted successfully.');
+    }
 }

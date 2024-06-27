@@ -13,6 +13,11 @@ export default function Authenticated({ user, header, children }) {
                                     Dashboard
                                 </NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" href={route('products')} active={route().current('products')}>
+                                    Products
+                                </NavLink>
+                            </li>
                         </ul>
                     </div>
                 </div>
