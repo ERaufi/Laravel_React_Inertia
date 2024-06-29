@@ -2,8 +2,12 @@ import Pagination from '@/Components/Pagination';
 import Authenticated from '@/Layouts/AuthenticatedLayout'
 import { Head, Link, useForm } from '@inertiajs/react'
 import React, { useEffect } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
-export default function Index({ auth, products }) {
+
+export default function Index({ auth, products, flash }) {
+    // console.log(flash.message.success);
     const { data, setData, get, delete: destroy } = useForm({
         name: '',
         buyingPrice: '',
@@ -12,6 +16,7 @@ export default function Index({ auth, products }) {
     });
 
     const handleFilterChange = (e) => setData(e.target.name, e.target.value);
+    // toast.success('Products fetched successfully');
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -28,6 +33,18 @@ export default function Index({ auth, products }) {
     }, [data]);
 
 
+
+    // Display flash messages if they exist
+    useEffect(() => {
+        if (flash.message.success) {
+            toast.success(flash.message.success);
+        }
+        if (flash.message.error) {
+            toast.error(flash.message.error);
+        }
+    }, [flash]);
+
+
     const handleDelete = (productId) => {
         if (confirm('Are you sure you want to delete this product?')) {
             destroy(`/products/delete/${productId}`);
@@ -38,6 +55,7 @@ export default function Index({ auth, products }) {
     return (
         <Authenticated user={auth.user} header={<h2>Products</h2>}>
             <Head title="Products" />
+            <ToastContainer />
             <table className='table'>
                 <thead>
                     <tr>

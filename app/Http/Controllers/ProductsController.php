@@ -45,7 +45,7 @@ class ProductsController extends Controller
         $product->image = $imagePath;
         $product->save();
 
-        return redirect('dashboard')->with('success', 'Product Added successfully.');
+        return redirect('dashboard')->with(['success' => 'Product Added successfully.']);
     }
 
     public function edit($id)
@@ -69,7 +69,7 @@ class ProductsController extends Controller
 
         $item->update();
 
-        return redirect('products')->with('success', 'Product Added successfully.');
+        return redirect('products')->with(['success' => 'Product Added successfully.']);
     }
 
     public function show($id)
@@ -85,6 +85,6 @@ class ProductsController extends Controller
     {
         Products::where('id', $id)->delete();
 
-        return redirect('products')->with('success', 'Product Deleted successfully.');
+        return redirect('products')->with(['success' => 'Product Deleted successfully.']);
     }
 }
