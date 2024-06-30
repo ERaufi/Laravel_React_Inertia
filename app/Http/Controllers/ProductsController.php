@@ -46,7 +46,7 @@ class ProductsController extends Controller
         $product->image = $imagePath;
         $product->save();
 
-        return redirect('dashboard')->with(['success' => 'Product Added successfully.']);
+        return redirect('products')->with(['success' => 'Product Added successfully.']);
     }
 
     public function edit($id)

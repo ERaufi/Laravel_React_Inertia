@@ -57,6 +57,7 @@ export default function Index({ auth, products, flash }) {
         <Authenticated user={auth.user} header={<h2>Products</h2>}>
             <Head title="Products" />
             <ToastContainer />
+            <Link href={'products/add'} className='btn btn-success'>New Product</Link>
             <table className='table'>
                 <thead>
                     <tr>
