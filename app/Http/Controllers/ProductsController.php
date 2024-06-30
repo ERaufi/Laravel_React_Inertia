@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductsRequest;
+use App\Http\Requests\ProductsUpdateRequest;
 use App\Models\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -44,6 +46,50 @@ class ProductsController extends Controller
         $product->image = $imagePath;
         $product->save();
 
-        return redirect('dashboard')->with('success', 'Product Added successfully.');
+        return redirect('products')->with(['success' => 'Product Added successfully.']);
+    }
+
+    public function edit($id)
+    {
+        $product = Products::findOrFail($id);
+
+        return inertia('Products/Edit', compact('product'));
+    }
+
+    public function update(ProductsUpdateRequest $request)
+    {
+        $item = Products::where('id', $request->id)->first();
+        $item->name = $request->name;
+        $item->buyingPrice = $request->buyingPrice;
+        $item->sellingPrice = $request->sellingPrice;
+
+        if ($request->has('image') && $request->image != null) {
+            $imagePath = $request->file('image')->store('productsImages', 'public');
+            $item->image = $imagePath;
+        }
+
+        $item->update();
+
+        return redirect('products')->with(['success' => 'Product Edited successfully.']);
+    }
+
+    public function show($id)
+    {
+        $product = Products::where('id', $id)->first();
+
+        return inertia('Products/Show', [
+            'product' => $product
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $item = Products::where('id', $id)->first();
+        if ($item->image) {
+            Storage::disk('public')->delete($item->image);
+        }
+        $item->delete();
+
+        return redirect('products')->with(['success' => 'Product Deleted successfully.']);
     }
 }
