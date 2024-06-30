@@ -36,6 +36,7 @@ export default function Index({ auth, products, flash }) {
 
     // Display flash messages if they exist
     useEffect(() => {
+        console.log(flash);
         if (flash.message.success) {
             toast.success(flash.message.success);
         }

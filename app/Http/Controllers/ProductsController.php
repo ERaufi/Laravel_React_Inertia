@@ -70,7 +70,7 @@ class ProductsController extends Controller
 
         $item->update();
 
-        return redirect('products')->with(['success' => 'Product Added successfully.']);
+        return redirect('products')->with(['success' => 'Product Edited successfully.']);
     }
 
     public function show($id)
@@ -90,6 +90,6 @@ class ProductsController extends Controller
         }
         $item->delete();
 
-        return redirect('products')->with('success', 'Product Deleted successfully.');
+        return redirect('products')->with(['success' => 'Product Deleted successfully.']);
     }
 }
